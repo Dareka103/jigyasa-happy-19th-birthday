@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Jigyasa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            margin: 0; padding: 0; background-color: #000; overflow-x: hidden; 
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; font-family: 'Sacramento', cursive; 
+            color: #ff1493; text-shadow: 0 0 10px #ff1493;
+        }
+
+        /* --- BACKGROUND HEARTS --- */
+        .bg-heart-container { position: fixed; bottom: -50px; animation: rise linear infinite; z-index: 1; pointer-events: none; }
+        .bg-heart { color: #ff1493; text-shadow: 0 0 10px #ff1493, 0 0 20px #ff1493; display: block; }
+        @keyframes rise { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(-110vh); opacity: 0; } }
+
+        /* --- CENTERED INTERACTIVE BUTTONS --- */
+        button, .final-link { 
+            padding: 15px 35px; font-family: 'Sacramento', cursive; 
+            font-size: 2.2rem; color: #fff !important; 
+            background: rgba(255, 20, 147, 0.1); 
+            border: 3px solid #ff1493; border-radius: 60px; 
+            cursor: pointer; box-shadow: 0 0 15px #ff1493; 
+            transition: all 0.2s ease; text-decoration: none; 
+            display: inline-block; margin: 15px;
+            animation: flicker 3s infinite;
+        }
+        button:hover, .final-link:hover { background: #ff1493; color: #000 !important; box-shadow: 0 0 40px #ff1493; transform: scale(1.05); }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+            20%, 22%, 24%, 55% { opacity: 0.8; }
+        }
+
+        /* --- ORIGINAL POLAROID SIZING --- */
+        #gallery-container { 
+            display: none; width: 100%; max-width: 1200px;
+            flex-wrap: wrap; justify-content: center; align-items: center;
+            padding: 40px 20px; z-index: 5; margin-bottom: 100px;
+        }
+
+        .gallery-image { 
+            width: 250px; /* Original larger size */
+            background: #fff; padding: 15px 15px 60px 15px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            opacity: 0; transform: translateY(50px); 
+            transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            position: relative; margin: 15px;
+        }
+
+        .gallery-image img { width: 100%; height: auto; }
+        .caption { 
+            position: absolute; bottom: 15px; left: 0; width: 100%; 
+            text-align: center; color: #333 !important; 
+            text-shadow: none !important; font-size: 1.6rem; font-weight: bold; 
+        }
+
+        /* --- CENTERED CONTAINERS --- */
+        .content-wrapper, .overlay-section, #final-surprise-container {
+            text-align: center;
+            z-index: 20;
+        }
+
+        .overlay-section { 
+            display: none; position: fixed; top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); width: 95%; max-width: 600px; 
+        }
+
+        #final-surprise-container {
+            position: relative; width: 100%; margin-top: 50px;
+        }
+
+        #message-box { font-size: 2.5rem; line-height: 1.4; max-width: 800px; margin: 0 auto 20px; }
+
+        .main-container { position: relative; width: 90vw; height: 70vh; display: flex; justify-content: center; align-items: center; z-index: 10; }
+        svg.neon-heart { position: absolute; width: 100%; height: 100%; fill: none; stroke: #ff1493; stroke-width: 8; filter: drop-shadow(0 0 15px #ff1493); }
+        .pop-up { opacity: 1 !important; transform: translateY(0) rotate(var(--rotation)) !important; }
+
+        #game-area { width: 300px; height: 400px; border: 3px solid #ff1493; margin: 20px auto; position: relative; overflow: hidden; background: rgba(0,0,0,0.5); border-radius: 15px; }
+    </style>
+</head>
+<body>
+
+<audio id="birthdayMusic" loop><source src="love-me.mp3" type="audio/mpeg"></audio>
+
+<div class="main-container" id="mainContainer">
+    <svg class="neon-heart" viewBox="0 0 512 512"><path d="M256 448l-30.164-27.211C118.718 322.442 48 258.61 48 179.095 48 114.221 97.918 64 162.4 64c36.399 0 70.717 16.742 93.6 43.947C278.882 80.742 313.199 64 349.6 64 414.082 64 464 114.221 464 179.095c0 79.516-70.719 143.348-177.836 241.694L256 448z"/></svg>
+    <div class="content-wrapper">
+        <button id="startBtn" onclick="startSurprise()">Press Me</button>
+        <div id="message-box"></div>
+        <button id="giftBtn" onclick="openGift()" style="display:none;">Click for gift 🎁</button>
+    </div>
+</div>
+
+<div id="gallery-container">
+    <div class="gallery-image"><img src="image_0.png"><div class="caption">baby jigyasa ❤️</div></div>
+    <div class="gallery-image"><img src="image_1.png"><div class="caption">kido days</div></div>
+    <div class="gallery-image"><img src="image_2.png"><div class="caption">glow up!</div></div>
+    <div class="gallery-image"><img src="image_3.png"><div class="caption">forever us</div></div>
+    
+    <div id="final-surprise-container" style="display:none;">
+        <button id="finalSurpriseBtn" onclick="showGiftBox()">One final surprise</button>
+        <div id="gift-box-wrapper" style="display:none; cursor:pointer;" onclick="unwrapGift()">
+            <div style="font-size: 100px;">🎁</div>
+        </div>
+        <div id="final-links" style="display:none;">
+            <a href="https://open.spotify.com/playlist/5baSE2eJFdVilrVZ6mGPff?si=1be973b568134d2d" target="_blank" class="final-link">🎵 Our Playlist</a>
+    <a href="http://salty.co.in/" target="_blank" class="final-link">💝 Your Gift</a>
+            <button class="final-link" onclick="startQuizTransition()">💖 Quiz</button>
+        </div>
+    </div>
+</div>
+
+<div id="quiz-section" class="overlay-section">
+    <h2 id="quiz-q" style="font-size: 3.5rem;"></h2>
+    <div id="quiz-options"></div>
+</div>
+
+<div id="game-section" class="overlay-section">
+    <h2>Catch 10 Hearts!</h2>
+    <p style="font-size: 2.5rem;">Score: <span id="score-display">0</span></p>
+    <div id="game-area"></div>
+</div>
+
+<div id="result-section" class="overlay-section">
+    <h2>Our Report</h2>
+    <p id="total-points-text" style="font-size: 2.2rem;"></p>
+    <div id="scratch-container" style="width: 350px; height: 180px; margin: 20px auto; border: 4px solid #ff1493; position: relative;">
+        <div id="secret-message" style="position: absolute; width:100%; height:100%; display:flex; align-items:center; justify-content:center; padding:15px; box-sizing:border-box; font-size:1.8rem;"></div>
+        <canvas id="scratch-canvas" width="350" height="180" style="position:absolute; top:0; left:0;"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+    // RESTORED HEART GENERATOR
+    function createRisingHeart() {
+        const container = document.createElement('div');
+        container.className = 'bg-heart-container';
+        container.style.left = Math.random() * 100 + 'vw';
+        container.style.animationDuration = (Math.random() * 5 + 3) + 's';
+        const heart = document.createElement('span');
+        heart.className = 'bg-heart';
+        heart.innerHTML = '❤';
+        heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+        container.appendChild(heart);
+        document.body.appendChild(container);
+        setTimeout(() => container.remove(), 8000);
+    }
+    setInterval(createRisingHeart, 300);
+
+    const messageText = "Happy 19th birthday jigyasa, hope you enjoy your day and have lots of fun. i love you a lot baby and will be there to celebrate many more birthdays like this in the future, aapka fav bihari";
+    let quizPoints = 0, currentQ = 0;
+    const questions = [
+        { q: "What's our favorite thing to do?", a: ["Talk", "Eat", "Fight (Love)", "Just be together"], p: [5, 5, 5, 10] },
+        { q: "How much do I love you?", a: ["A lot", "Too much", "Unlimited", "Infinity & Beyond"], p: [5, 5, 10, 10] },
+        { q: "Who is the best couple?", a: ["Us", "Jigyasa & vivan", "Me & You", "Absolutely Us"], p: [10, 10, 10, 10] },
+        { q: "Will we stay together and try our best?", a: ["Yes", "Yes", "Yes", "Absolutely YES"], p: [10, 10, 10, 10] }
+    ];
+
+    function startSurprise() {
+        document.getElementById('birthdayMusic').play();
+        document.getElementById('startBtn').style.display = 'none';
+        const msgBox = document.getElementById('message-box');
+        let i = 0;
+        function type() {
+            if (i < messageText.length) { msgBox.innerHTML += messageText.charAt(i++); setTimeout(type, 50); }
+            else { setTimeout(() => document.getElementById('giftBtn').style.display = 'inline-block', 500); }
+        }
+        type();
+    }
+
+    function openGift() {
+        document.getElementById('mainContainer').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('mainContainer').style.display = 'none';
+            const gallery = document.getElementById('gallery-container');
+            gallery.style.display = 'flex';
+            const images = document.querySelectorAll('.gallery-image');
+            images.forEach((img, idx) => {
+                setTimeout(() => {
+                    img.style.setProperty('--rotation', (Math.random()*20-10)+'deg');
+                    img.classList.add('pop-up');
+                    if(idx === images.length-1) setTimeout(() => {
+                        document.getElementById('final-surprise-container').style.display = 'block';
+                    }, 800);
+                }, idx * 350);
+            });
+        }, 800);
+    }
+
+    function showGiftBox() { document.getElementById('finalSurpriseBtn').style.display = 'none'; document.getElementById('gift-box-wrapper').style.display = 'block'; }
+    function unwrapGift() {
+        confetti({ particleCount: 150, spread: 70 });
+        document.getElementById('gift-box-wrapper').style.display = 'none';
+        document.getElementById('final-links').style.display = 'block';
+    }
+
+    function startQuizTransition() {
+        document.getElementById('gallery-container').style.display = "none";
+        document.getElementById('quiz-section').style.display = "block";
+        loadQuestion();
+    }
+
+    function loadQuestion() {
+        if (currentQ < questions.length) {
+            const data = questions[currentQ];
+            document.getElementById('quiz-q').innerText = data.q;
+            const container = document.getElementById('quiz-options');
+            container.innerHTML = '';
+            data.a.forEach((opt, i) => {
+                const b = document.createElement('button');
+                b.innerText = opt;
+                b.onclick = () => { quizPoints += data.p[i]; currentQ++; loadQuestion(); };
+                container.appendChild(b);
+            });
+        } else { startHeartGame(); }
+    }
+
+    function startHeartGame() {
+        document.getElementById('quiz-section').style.display = "none";
+        document.getElementById('game-section').style.display = "block";
+        let caught = 0;
+        const area = document.getElementById('game-area');
+        const interval = setInterval(() => {
+            const h = document.createElement('div');
+            h.innerHTML = '❤️';
+            h.style.cssText = `position:absolute; left:${Math.random()*260}px; top:-50px; font-size:40px; cursor:pointer; transition: top 3s linear;`;
+            h.onclick = () => { caught++; document.getElementById('score-display').innerText = caught; h.remove(); if(caught === 10) { clearInterval(interval); showResultBtn(); } };
+            area.appendChild(h);
+            setTimeout(() => h.style.top = '400px', 50);
+            setTimeout(() => h.remove(), 3100);
+        }, 800);
+    }
+
+    function showResultBtn() {
+        const b = document.createElement('button');
+        b.innerText = "Get Result";
+        b.onclick = showFinalReport;
+        document.getElementById('game-section').appendChild(b);
+    }
+
+    function showFinalReport() {
+        document.getElementById('game-section').style.display = "none";
+        document.getElementById('result-section').style.display = "block";
+        document.getElementById('total-points-text').innerText = `Chemistry Score: ${quizPoints}`;
+        document.getElementById('secret-message').innerText = quizPoints >= 35 ? "You're my ultimate soulmate! i love you ❤️" : " 10 free kisses for you when we meet 😘";
+        initScratch();
+    }
+
+    function initScratch() {
+        const canvas = document.getElementById('scratch-canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#444'; ctx.fillRect(0, 0, 350, 180);
+        ctx.fillStyle = '#ff1493'; ctx.font = '30px Sacramento'; ctx.fillText('Scratch Me!', 110, 100);
+        let active = false;
+        const draw = (e) => {
+            if (!active) return;
+            const r = canvas.getBoundingClientRect();
+            const x = (e.pageX || e.touches[0].pageX) - r.left;
+            const y = (e.pageY || e.touches[0].pageY) - r.top;
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.beginPath(); ctx.arc(x, y, 25, 0, Math.PI*2); ctx.fill();
+        };
+        canvas.onmousedown = canvas.ontouchstart = () => active = true;
+        canvas.onmouseup = canvas.ontouchend = () => active = false;
+        canvas.onmousemove = canvas.ontouchmove = draw;
+    }
+</script>
+</body>
+</html>
